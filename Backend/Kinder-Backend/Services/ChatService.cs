@@ -52,6 +52,11 @@ public class ChatService : IChatService
                 ChannelType = channelDto.Type
             }).ToList();
     }
+
+    public async Task InsertMessageAsync(object chatInfo)
+    {
+        await _fireStoreProxy.InsertMessageAsync(chatInfo);
+    }
 }
 
 public class ChatListInfo

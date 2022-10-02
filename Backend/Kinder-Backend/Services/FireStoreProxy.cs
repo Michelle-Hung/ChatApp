@@ -70,6 +70,12 @@ public class FireStoreProxy : IFireStoreProxy
         return chatInfos;
     }
 
+    public async Task InsertMessageAsync(object chatInfo)
+    {
+        var documentReference = _firestoreDb.Collection("MessageDto").Document();
+        await documentReference.SetAsync(chatInfo.AsDictionary());
+    }
+
     private async Task<IEnumerable<ProfileDto>> GetProfilesAsync()
     {
         var profileDtos = (await _firestoreDb.Collection("Profile").GetSnapshotAsync()).Documents.Select(x => x.ToDictionary().ToObject<ProfileDto>());
@@ -214,16 +220,4 @@ public class AccountInfoDto
     public string LoginName { get; set; }
     [FirestoreProperty]
     public string Passwords { get; set; }
-}
-
-public interface IFireStoreProxy
-{
-    Task InsertUserInfo(AccountInfoDto accountInfoDto);
-    Task<List<AccountInfoDto>> GetAccountInfos();
-    Task<AccountInfoDto> GetAccountInfo(LoginRequest request);
-    Task Insert<T>(T data, string tableName);
-    Task<List<T>> Get<T>(string tableName) where T : class, new();
-    Task<IEnumerable<ProfileDto>> GetContactProfiles(string userId);
-    Task<IEnumerable<ChannelDto>> GetChannelsAsync(string userId);
-    Task<IEnumerable<ChatInfo>> GetChatInfosByUserAsync(string userId);
 }
