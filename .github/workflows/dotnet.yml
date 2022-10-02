@@ -32,9 +32,11 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: /Backend dotnet restore
+      run: dotnet restore
+      working-directory: Backend
     - name: Build
       run: dotnet build --no-restore
+      working-directory: Backend
       
     - name: Run Unit Test and Generate coverage report
       run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
