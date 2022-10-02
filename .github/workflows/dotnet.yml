@@ -31,10 +31,8 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
-
-    - uses: ./Backend/Kinder-Backend
     - name: Restore dependencies
-      run: dotnet restore
+      run: /Backend dotnet restore
     - name: Build
       run: dotnet build --no-restore
       
