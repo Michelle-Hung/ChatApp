@@ -40,6 +40,7 @@ jobs:
       
     - name: Run Unit Test and Generate coverage report
       run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
+      working-directory: Backend
     - name: Publish coverage report to coveralls.io
       uses: coverallsapp/github-action@master
       with:
