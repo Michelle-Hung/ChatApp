@@ -33,16 +33,19 @@ jobs:
         dotnet-version: 6.0.x
     - name: Restore dependencies
       run: dotnet restore
+      working-directory: Backend
     - name: Build
       run: dotnet build --no-restore
+      working-directory: Backend
       
     - name: Run Unit Test and Generate coverage report
       run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
+      working-directory: Backend
     - name: Publish coverage report to coveralls.io
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: ./KinderBackendUnitTest/TestResults/coverage.info
+        path-to-lcov: ./Backend/KinderBackendUnitTest/TestResults/coverage.info
     needs: securityScanning
         
   analyze:
@@ -74,13 +77,15 @@ jobs:
         run: |
           New-Item -Path .\.sonar\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+        working-directory: Backend
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
+        working-directory: Backend
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"Michelle-Hung_Kinder-Backend" /o:"michelle-hung" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"Michelle-Hung_ChatApp" /o:"michelle-hung" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
           dotnet build
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
     needs: securityScanning
