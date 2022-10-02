@@ -24,10 +24,10 @@
         </v-list-item-header>
       </v-list-item>
       <div
-        v-for="(recentChatInfo, index) in filterRecentChatInfos()"
+        v-for="recentChatInfo in filterRecentChatInfos()"
         v-bind:key="recentChatInfo.channelId"
       >
-        <v-list-item height="90" :value="index + 1">
+        <v-list-item height="90" v-on:click="openChatRoom(recentChatInfo)">
           <v-list-item-avatar left>
             <v-avatar size="small">
               <v-img
@@ -82,8 +82,10 @@
 <script lang="ts" setup>
 import { RecentChatListInfo } from "@/models/ChatInfo";
 import { useLoginUserInfoStore } from "@/store/LoginUserInfo";
+import { useChatRoomInfoStore } from "@/store/ChatRoomInfo";
 import chatApi from "@/services/Chat";
-import { ref } from "@vue/reactivity";
+import { reactive, ref } from "@vue/reactivity";
+import { ChatRoomInfo } from "@/models/ChatRoomInfo";
 
 const loginUserInfoStore = useLoginUserInfoStore();
 let recentChatInfos = ref<Array<RecentChatListInfo>>([]);
@@ -98,6 +100,16 @@ const filterRecentChatInfos = () => {
   return recentChatInfos.value.filter((x) =>
     x.channelName.toLowerCase().includes(searchText.value.toLowerCase())
   );
+};
+
+const openChatRoom = (currentChatInfo: RecentChatListInfo) => {
+  const chatRoomInfoStore = useChatRoomInfoStore();
+  const chatRoomInfo = reactive<ChatRoomInfo>({
+    channelId: currentChatInfo.channelId,
+    channelName: currentChatInfo.channelName,
+    channelType: currentChatInfo.channelType,
+  });
+  chatRoomInfoStore.setchatRoomInfo(chatRoomInfo);
 };
 </script>
 <style></style>

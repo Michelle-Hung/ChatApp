@@ -56,13 +56,17 @@
 import { ref } from "vue";
 import { signalrInit } from "../services/SignalR";
 import { useLoginUserInfoStore } from "@/store/LoginUserInfo";
+import { useChatRoomInfoStore } from "@/store/ChatRoomInfo";
 const { connection, chatContentList } = signalrInit();
 const loginUserInfoStore = useLoginUserInfoStore();
 
 const newMessage = ref("");
 const myNickName = loginUserInfoStore.$state.loginUserInfo?.name;
+const chatRoomInfoStore = useChatRoomInfoStore();
 const sendMessage = () => {
   if (newMessage.value !== "") {
+    console.table(chatRoomInfoStore.$state.chatRoomInfo);
+    //TODO: pass message to backend for store
     connection
       .invoke("sendMessageAsync", newMessage.value, myNickName)
       .catch((error) => {
