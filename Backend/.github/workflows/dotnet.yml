@@ -42,7 +42,7 @@ jobs:
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: ./KinderBackendUnitTest/TestResults/coverage.info
+        path-to-lcov: ./Backend/KinderBackendUnitTest/TestResults/coverage.info
     needs: securityScanning
         
   analyze:
