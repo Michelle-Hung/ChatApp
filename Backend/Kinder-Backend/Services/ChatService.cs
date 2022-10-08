@@ -48,7 +48,7 @@ public class ChatService : IChatService
                 ChannelId = channelDto.Id,
                 ChannelCreatedOn = channelDto.CreatedOn.ToDateTime(),
                 ChatInfo = latestChatInfo,
-                ChannelName = string.Equals(channelDto.Type, "Direct") ? latestChatInfo.SendTo.DisplayName : channelDto.Name ,
+                ChannelName = GetChannelName(userId, channelDto, latestChatInfo),
                 ChannelType = channelDto.Type
             }).ToList();
     }
@@ -57,13 +57,22 @@ public class ChatService : IChatService
     {
         await _fireStoreProxy.InsertMessageAsync(chatInfo);
     }
+
+    private static string GetChannelName(string userId, ChannelDto channelDto, ChatInfo latestChatInfo)
+    {
+        return string.Equals(channelDto.Type, "Direct")
+            ? latestChatInfo.SendTo.UserId == userId
+                ? latestChatInfo.SendBy.DisplayName
+                : latestChatInfo.SendTo.DisplayName
+            : channelDto.Name;
+    }
 }
 
 public class ChatListInfo
 {
+    public DateTime ChannelCreatedOn { get; set; }
     public string ChannelId { get; set; }
     public string ChannelName { get; set; }
     public string ChannelType { get; set; }
-    public DateTime ChannelCreatedOn { get; set; }
     public ChatInfo ChatInfo { get; set; }
 }
