@@ -1,7 +1,7 @@
 <template>
   <Login v-if="!isLogin" />
-  <About v-else-if="isLogin && !isOpenChatRoom" />
-  <Chat v-else-if="isLogin && isOpenChatRoom" />
+  <WelcomeToChatApp v-else-if="isLogin && !isOpenChatRoom" />
+  <Chat v-else-if="isLogin && isOpenChatRoom"/>
 </template>
 
 <script lang="ts" setup>
@@ -10,8 +10,8 @@ import Login from "../components/Login.vue";
 import { useLoginUserInfoStore } from "@/store/LoginUserInfo";
 import { useTogglesStore } from "@/store/TogglesStore";
 import { storeToRefs } from "pinia";
-import About from "./About.vue";
 import Chat from "@/components/Chat.vue";
+import WelcomeToChatApp from "./WelcomeToChatApp.vue";
 
 // @Options({
 //   components: {
@@ -30,11 +30,12 @@ import Chat from "@/components/Chat.vue";
 // }
 const loginUserInfoStore = useLoginUserInfoStore();
 const { loginUserInfo } = storeToRefs(loginUserInfoStore);
-const togglesStore = useTogglesStore();
 const isLogin = computed(() => {
   return loginUserInfo.value?.isLogin;
 });
+
+const togglesStore = useTogglesStore();
 const isOpenChatRoom = computed(() => {
   return togglesStore.$state.isOpenChatRoom;
-});
+})
 </script>
