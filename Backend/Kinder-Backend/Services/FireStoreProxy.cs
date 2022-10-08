@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Google.Cloud.Firestore;
 using Kinder_Backend.Controllers;
 using Kinder_Backend.Helper;
+using Kinder_Backend.Models;
 
 namespace Kinder_Backend.Services;
 

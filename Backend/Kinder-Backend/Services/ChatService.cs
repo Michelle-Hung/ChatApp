@@ -1,8 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Kinder_Backend.Controllers;
+using Kinder_Backend.Models;
 
 namespace Kinder_Backend.Services;
 
@@ -66,13 +66,4 @@ public class ChatService : IChatService
                 : latestChatInfo.SendTo.DisplayName
             : channelDto.Name;
     }
-}
-
-public class ChatListInfo
-{
-    public DateTime ChannelCreatedOn { get; set; }
-    public string ChannelId { get; set; }
-    public string ChannelName { get; set; }
-    public string ChannelType { get; set; }
-    public ChatInfo ChatInfo { get; set; }
 }
