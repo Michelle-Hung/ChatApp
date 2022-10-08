@@ -44,7 +44,7 @@ namespace Kinder_Backend
             services.AddSignalR();
             services.AddSingleton<IFireStoreProxy>(_ =>
             {
-                var filepath = Path.Combine(Environment.CurrentDirectory, "kinder-backend-firebase-adminsdk-4nn6o-13977d4a3e.json");
+                var filepath = "/Users/michelle/Git/Keys/kinder-backend-firebase-adminsdk-4nn6o-13977d4a3e.json";
                 Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", filepath);
                 FirebaseApp.Create(new AppOptions()
                 {
