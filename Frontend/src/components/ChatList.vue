@@ -83,6 +83,7 @@
 import { RecentChatListInfo } from "@/models/ChatInfo";
 import { useLoginUserInfoStore } from "@/store/LoginUserInfo";
 import { useChatRoomInfoStore } from "@/store/ChatRoomInfo";
+import { useTogglesStore } from "@/store/TogglesStore";
 import chatApi from "@/services/Chat";
 import { reactive, ref } from "@vue/reactivity";
 import { ChatRoomInfo } from "@/models/ChatRoomInfo";
@@ -110,6 +111,9 @@ const openChatRoom = (currentChatInfo: RecentChatListInfo) => {
     channelType: currentChatInfo.channelType,
   });
   chatRoomInfoStore.setchatRoomInfo(chatRoomInfo);
+
+  const togglesStore = useTogglesStore();
+  togglesStore.setIsOpenChatRoom(!togglesStore.$state.isOpenChatRoom);
 };
 </script>
 <style></style>

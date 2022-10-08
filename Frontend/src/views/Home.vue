@@ -1,14 +1,17 @@
 <template>
   <Login v-if="!isLogin" />
-  <Chat v-else-if="isLogin" />
+  <About v-else-if="isLogin && !isOpenChatRoom" />
+  <Chat v-else-if="isLogin && isOpenChatRoom" />
 </template>
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import Chat from "../components/Chat.vue";
 import Login from "../components/Login.vue";
 import { useLoginUserInfoStore } from "@/store/LoginUserInfo";
+import { useTogglesStore } from "@/store/TogglesStore";
 import { storeToRefs } from "pinia";
+import About from "./About.vue";
+import Chat from "@/components/Chat.vue";
 
 // @Options({
 //   components: {
@@ -27,8 +30,11 @@ import { storeToRefs } from "pinia";
 // }
 const loginUserInfoStore = useLoginUserInfoStore();
 const { loginUserInfo } = storeToRefs(loginUserInfoStore);
-
+const togglesStore = useTogglesStore();
 const isLogin = computed(() => {
   return loginUserInfo.value?.isLogin;
+});
+const isOpenChatRoom = computed(() => {
+  return togglesStore.$state.isOpenChatRoom;
 });
 </script>
