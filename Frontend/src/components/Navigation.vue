@@ -47,10 +47,6 @@
 import { ref } from "@vue/reactivity";
 import FriendList from "@/components/FriendList.vue";
 import ChatList from "@/components/ChatList.vue";
-const searchText = ref("");
-const search = () => {
-  console.log(`search text:: ${searchText.value}`);
-};
 const isOpenChatList = ref(false);
 const isOpenFriendList = ref(false);
 const openChatList = () => {
