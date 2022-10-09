@@ -1,7 +1,7 @@
 <template>
   <Login v-if="!isLogin" />
   <WelcomeToChatApp v-else-if="isLogin && !isOpenChatRoom" />
-  <Chat v-else-if="isLogin && isOpenChatRoom"/>
+  <Chat v-else-if="isLogin && isOpenChatRoom" />
 </template>
 
 <script lang="ts" setup>
@@ -37,5 +37,5 @@ const isLogin = computed(() => {
 const togglesStore = useTogglesStore();
 const isOpenChatRoom = computed(() => {
   return togglesStore.$state.isOpenChatRoom;
-})
+});
 </script>
