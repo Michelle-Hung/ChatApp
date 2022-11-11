@@ -1,18 +1,19 @@
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-focal AS base
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 EXPOSE 5000
+EXPOSE 5001
 
-ENV ASPNETCORE_URLS=http://+:5000
+ENV ASPNETCORE_URLS=http://+:5000;https://+:5001
 
 # Creates a non-root user with an explicit UID and adds permission to access the /app folder
 # For more info, please refer to https://aka.ms/vscode-docker-dotnet-configure-containers
 RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
 USER appuser
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0-focal AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["Kinder-Backend/Kinder-Backend.csproj", "Kinder-Backend/"]
-RUN dotnet restore "Kinder-Backend/Kinder-Backend.csproj"
+RUN dotnet restore "./Kinder-Backend/Kinder-Backend.csproj"
 COPY . .
 WORKDIR "/src/Kinder-Backend"
 RUN dotnet build "Kinder-Backend.csproj" -c Release -o /app/build
