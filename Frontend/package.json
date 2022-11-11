@@ -8,7 +8,8 @@
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
-    "build:staging": "vue-cli-service build --mode staging"
+    "build:staging": "vue-cli-service build --mode staging",
+    "frontend:docker-run": "docker build -t kinder-frontend . && docker run -it -p 8080:8080 --rm --name kinder-frontend kinder-frontend"
   },
   "dependencies": {
     "@mdi/font": "5.9.55",

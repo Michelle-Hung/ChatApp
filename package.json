@@ -1,0 +1,15 @@
+{
+    "name": "chatapp",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+      "frontend:docker-run": "npm run-script --prefix Frontend frontend:docker-run",
+      "backend:dotnet-run": "npm run-script --prefix Backend run"
+    },
+    "browserslist": [
+      "> 1%",
+      "last 2 versions",
+      "not dead"
+    ]
+  }
+  
