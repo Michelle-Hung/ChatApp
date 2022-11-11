@@ -6,6 +6,7 @@ using Kinder_Backend.Hub;
 using Kinder_Backend.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -35,6 +36,7 @@ namespace Kinder_Backend
                 options.AddDefaultPolicy( builder =>
                     builder
                         .WithOrigins("http://localhost:8080","http://172.20.10.3:8080","http://127.0.0.1:8080","http://172.17.0.2:8080")
+                        .WithOrigins("https://*.ngrok.io/").SetIsOriginAllowedToAllowWildcardSubdomains()
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials()
