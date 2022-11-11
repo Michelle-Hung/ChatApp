@@ -55,6 +55,7 @@ namespace Kinder_Backend
             });
             services.AddSingleton<IUserService, UserService>();
             services.AddSingleton<IChatService, ChatService>();
+            services.AddHealthChecks();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +67,8 @@ namespace Kinder_Backend
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Kinder_Backend v1"));
             }
+
+            app.UseHealthChecks("/health");
 
             app.UseHttpsRedirection();
 
