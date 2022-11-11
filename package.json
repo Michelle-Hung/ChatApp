@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
       "frontend:docker-run": "npm run-script --prefix Frontend frontend:docker-run",
-      "backend:dotnet-run": "npm run-script --prefix Backend run"
+      "backend:dotnet-run": "npm run-script --prefix Backend backend:docker-run"
     },
     "browserslist": [
       "> 1%",
