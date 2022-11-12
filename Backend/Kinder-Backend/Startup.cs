@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Firestore;
@@ -45,7 +46,7 @@ namespace Kinder_Backend
             services.AddSignalR();
             services.AddSingleton<IFireStoreProxy>(_ =>
             {
-                var filepath = "/Users/michelle/Git/Keys/kinder-backend-firebase-adminsdk-4nn6o-13977d4a3e.json";
+                var filepath = $"{Environment.CurrentDirectory}/keys/kinder-backend-firebase-adminsdk-4nn6o-13977d4a3e.json";
                 Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", filepath);
                 FirebaseApp.Create(new AppOptions()
                 {
