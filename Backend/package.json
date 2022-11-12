@@ -3,6 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "backend:docker-run": "docker build -t kinder-backend . && docker run --rm -it -p 8000:5000 -p 8001:5001 -e ASPNETCORE_Kestrel__Certificates__Default__Password='password' -e ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx -v ${HOME}/.aspnet/https:/https/ kinder-backend"
+    "backend:docker-run": "docker build -t kinder-backend . && docker run --rm -it -p 8000:5000 -p 8001:5001 -e ASPNETCORE_Kestrel__Certificates__Default__Password='password' -e ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx -v ${HOME}/.aspnet/https:/https/ -v ${HOME}/keys/google:/app/keys --name kinder-backend kinder-backend"
   }
 }
