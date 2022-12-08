@@ -5,12 +5,12 @@ on:
     branches: [ main ]
     paths:
       - Backend/**
-      - dotnet.yml
+      - 'dotnet.yml'
   pull_request:
     branches: [ main ]
     paths:
       - Backend/**
-      - dotnet.yml
+      - 'dotnet.yml'
 
 jobs:
   securityScanning:
