@@ -6,10 +6,10 @@ name: Node.js CI
 on:
   push:
     branches: [ main ]
-    paths: [ Frontend/**, '**/node.js.yml ]
+    paths: [ Frontend/**, '**/node.js.yml' ]
   pull_request:
     branches: [ main ]
-    paths: [ Frontend/**, '**/node.js.yml ]
+    paths: [ Frontend/**, '**/node.js.yml' ]
 
 defaults:
   run:
