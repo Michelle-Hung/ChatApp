@@ -3,14 +3,10 @@ name: .NET CI
 on:
   push:
     branches: [ main ]
-    paths:
-      - Backend/**
-      - '**/dotnet.yml'
+    paths: [ Backend/**, '**/dotnet.yml' ]
   pull_request:
     branches: [ main ]
-    paths:
-      - Backend/**
-      - '**/dotnet.yml'
+    paths: [ Backend/**, '**/dotnet.yml' ]
 
 jobs:
   securityScanning:
