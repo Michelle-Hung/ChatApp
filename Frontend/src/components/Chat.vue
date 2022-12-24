@@ -57,6 +57,7 @@ import { ref } from "vue";
 import { signalrInit } from "../services/SignalR";
 import { useLoginUserInfoStore } from "@/store/LoginUserInfo";
 import { useChatRoomInfoStore } from "@/store/ChatRoomInfo";
+import { SendMessageContent } from "@/models/SendMessageContent";
 const { connection, chatContentList } = signalrInit();
 const loginUserInfoStore = useLoginUserInfoStore();
 
@@ -67,11 +68,18 @@ const sendMessage = () => {
   if (newMessage.value !== "") {
     console.table(chatRoomInfoStore.$state.chatRoomInfo);
     //TODO: pass message to backend for store
-    connection
-      .invoke("sendMessageAsync", newMessage.value, myNickName)
-      .catch((error) => {
-        console.log(error);
-      });
+    const sendMessageContent: SendMessageContent = {
+      sendBy: {
+        userId: loginUserInfoStore.$state.loginUserInfo.id,
+        displayName: loginUserInfoStore.$state.loginUserInfo.name,
+      },
+      sendTo: chatRoomInfoStore.$state.chatRoomInfo.sendTo,
+      roomId: chatRoomInfoStore.$state.chatRoomInfo.channelId,
+      message: newMessage.value,
+    };
+    connection.invoke("sendMessageAsync", sendMessageContent).catch((error) => {
+      console.log(error);
+    });
     newMessage.value = "";
   }
 };

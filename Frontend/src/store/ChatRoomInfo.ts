@@ -7,6 +7,10 @@ export const useChatRoomInfoStore = defineStore("chatRoomInfo", () => {
     channelId: "0",
     channelName: "default",
     channelType: "undefine",
+    sendTo: {
+      userId: "1",
+      displayName: "default",
+    },
   });
   function setchatRoomInfo(data: ChatRoomInfo) {
     chatRoomInfo.value = data;

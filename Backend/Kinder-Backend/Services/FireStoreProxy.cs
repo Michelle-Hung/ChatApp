@@ -1,12 +1,18 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Authentication;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Google.Cloud.Firestore;
+using Google.Protobuf.WellKnownTypes;
+using Google.Type;
 using Kinder_Backend.Controllers;
 using Kinder_Backend.Helper;
+using Kinder_Backend.Hub;
 using Kinder_Backend.Models;
+using DateTime = System.DateTime;
+using Timestamp = Google.Cloud.Firestore.Timestamp;
 
 namespace Kinder_Backend.Services;
 
@@ -71,10 +77,25 @@ public class FireStoreProxy : IFireStoreProxy
         return chatInfos;
     }
 
-    public async Task InsertMessageAsync(object chatInfo)
+    public async Task InsertMessageAsync(SendMessageContent sendMessageContent)
     {
-        var documentReference = _firestoreDb.Collection("MessageDto").Document();
-        await documentReference.SetAsync(chatInfo.AsDictionary());
+        var messageDto = new MessageDto
+        {
+            MessageId = Guid.NewGuid().ToString(),
+            SendBy = sendMessageContent.SendBy.UserId,
+            SendTo = sendMessageContent.SendTo.UserId,
+            Content = sendMessageContent.Message,
+            CreatedOn = Timestamp.FromDateTime(DateTime.UtcNow)
+        };
+        var documentReference = _firestoreDb.Collection("Message").Document();
+        await documentReference.SetAsync(messageDto.AsDictionary());
+        
+        
+
+        var channelDocumentSnapshot = (await _firestoreDb.Collection("Channel").WhereEqualTo("Id", sendMessageContent.RoomId)
+            .GetSnapshotAsync()).Documents.Single();
+        var document = _firestoreDb.Collection("Channel").Document(channelDocumentSnapshot.Id);
+        await document.UpdateAsync("MessageIds", FieldValue.ArrayUnion(messageDto.MessageId));
     }
 
     private async Task<IEnumerable<ProfileDto>> GetProfilesAsync()

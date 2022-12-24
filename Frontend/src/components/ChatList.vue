@@ -104,12 +104,18 @@ const filterRecentChatInfos = () => {
 };
 
 const openChatRoom = (currentChatInfo: RecentChatListInfo) => {
-  const chatRoomInfoStore = useChatRoomInfoStore();
+  const sendToUserInfo =
+    currentChatInfo.chatInfo.sendBy.userId !==
+    loginUserInfoStore.$state.loginUserInfo.id
+      ? currentChatInfo.chatInfo.sendBy
+      : currentChatInfo.chatInfo.sendTo;
   const chatRoomInfo = reactive<ChatRoomInfo>({
     channelId: currentChatInfo.channelId,
     channelName: currentChatInfo.channelName,
     channelType: currentChatInfo.channelType,
+    sendTo: sendToUserInfo,
   });
+  const chatRoomInfoStore = useChatRoomInfoStore();
   chatRoomInfoStore.setchatRoomInfo(chatRoomInfo);
 
   const togglesStore = useTogglesStore();
