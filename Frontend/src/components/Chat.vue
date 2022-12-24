@@ -6,7 +6,7 @@
           <v-avatar>
             <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
           </v-avatar>
-          {{ myNickName }}
+          {{ chatRoomInfoStore.$state.chatRoomInfo.channelName }}
         </v-card-avatar>
         <v-row
           v-for="(chatContent, index) in chatContentList"
