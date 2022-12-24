@@ -26,4 +26,8 @@
     <ProjectReference Include="..\Kinder-Backend\Kinder-Backend.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ControllerTests" />
+  </ItemGroup>
+
 </Project>
