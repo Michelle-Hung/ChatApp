@@ -21,11 +21,3 @@ public class ChatHub : Microsoft.AspNetCore.SignalR.Hub
         await Clients.All.SendAsync("ReceiveMessage", sendMessageContent.Message, sendMessageContent.SendBy.DisplayName);
     }
 }
-
-public class SendMessageContent
-{
-    public UserInfo SendBy { get; set; }
-    public UserInfo SendTo { get; set; }
-    public string RoomId { get; set; }
-    public string Message { get; set; }
-}

@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Kinder_Backend.Controllers;
-using Kinder_Backend.Hub;
 using Kinder_Backend.Models;
 
 namespace Kinder_Backend.Services;

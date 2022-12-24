@@ -5,8 +5,6 @@ using System.Security.Authentication;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Google.Cloud.Firestore;
-using Google.Protobuf.WellKnownTypes;
-using Google.Type;
 using Kinder_Backend.Controllers;
 using Kinder_Backend.Helper;
 using Kinder_Backend.Hub;
@@ -90,8 +88,6 @@ public class FireStoreProxy : IFireStoreProxy
         var documentReference = _firestoreDb.Collection("Message").Document();
         await documentReference.SetAsync(messageDto.AsDictionary());
         
-        
-
         var channelDocumentSnapshot = (await _firestoreDb.Collection("Channel").WhereEqualTo("Id", sendMessageContent.RoomId)
             .GetSnapshotAsync()).Documents.Single();
         var document = _firestoreDb.Collection("Channel").Document(channelDocumentSnapshot.Id);
